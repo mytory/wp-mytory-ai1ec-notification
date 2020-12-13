@@ -1,0 +1,24 @@
+{
+  "name": "mytory/wp-mytory-ai1ec-notification",
+  "description": "워드프레스 플러그인 All In One Event Calendar 일정 알림 기능을 추가하는 패키지.",
+  "version": "0.1",
+  "keywords": [
+    "wordpress",
+    "ai1ec"
+  ],
+  "authors": [
+    {
+      "name": "An, Hyeong-woo",
+      "email": "mytory@gmail.com"
+    }
+  ],
+  "type": "library",
+  "require": {
+    "php": ">=7.0"
+  },
+  "autoload": {
+    "psr-4": {
+      "Mytory\\Ai1ecNotification\\": "src/"
+    }
+  }
+}
