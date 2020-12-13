@@ -12,7 +12,7 @@ date_default_timezone_set( 'Asia/Seoul' );
   <label style="margin-right: .5rem;">
 	  <?php if ( $push_notified == '예약' ) { ?>
         <input type="checkbox" disabled> 푸시 알림:
-		  <?php echo( !empty($push_reserved_time) ? date( 'n월 j일 G시 발송으로 예약되었습니다.', $push_reserved_time ) : '알림 예약되었습니다.' ); ?>
+		  <?php echo( ! empty( $push_reserved_time ) ? date( 'n월 j일 G시 발송으로 예약되었습니다.', $push_reserved_time ) : '알림 예약되었습니다.' ); ?>
 	  <?php } else { ?>
         <input type="checkbox" name="ai1ec_notification[medium]" value="push">
 		  <?php if ( $push_notified ) {
