@@ -382,9 +382,6 @@ class Ai1ecNotification {
 		update_post_meta( $post_id, '_ai1ec_kakao_notified', '1' );
 		update_post_meta( $post_id, '_ai1ec_kakao_datetime', date( 'YmdHis' ) );
 		update_post_meta( $post_id, '_ai1ec_kakao_result', "{$success_count}건 전송 완료" . ( $fail_count ? ", {$fail_count}건 전송 실패" : '' ) );
-		if ( ! empty( get_post_meta( $post_id, '_ai1ec_kakao_reserved_time' ) ) ) {
-			delete_post_meta( $post_id, '_ai1ec_kakao_reserved_time' );
-		}
 	}
 
 	public function sendPush( $post_id ) {
@@ -421,9 +418,6 @@ class Ai1ecNotification {
 		update_post_meta( $post_id, '_ai1ec_push_notified', true );
 		update_post_meta( $post_id, '_ai1ec_push_datetime', 'YmdHis' );
 		update_post_meta( $post_id, '_ai1ec_push_response', $response );
-		if ( ! empty( get_post_meta( $post_id, '_ai1ec_push_reserved_time' ) ) ) {
-			delete_post_meta( $post_id, '_ai1ec_push_reserved_time' );
-		}
 	}
 }
 
