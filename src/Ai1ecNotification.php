@@ -402,7 +402,7 @@ class Ai1ecNotification {
 		if ( defined( 'NOTIFICATION_TEST' ) and NOTIFICATION_TEST and defined( 'FCM_TEST_TARGET' ) and FCM_TEST_TARGET ) {
 			// 테스트 모드
 			$fcm->setTokens( [ FCM_TEST_TARGET ] );
-			$fcm->sendToUsers( $data );
+			$response = $fcm->sendToUsers( $data );
 		}
 
 		if ( defined( 'NOTIFICATION_TEST' ) and NOTIFICATION_TEST === false ) {
@@ -421,6 +421,9 @@ class Ai1ecNotification {
 		update_post_meta( $post_id, '_ai1ec_push_notified', true );
 		update_post_meta( $post_id, '_ai1ec_push_datetime', 'YmdHis' );
 		update_post_meta( $post_id, '_ai1ec_push_response', $response );
+		if ( ! empty( get_post_meta( $post_id, '_ai1ec_push_reserved_time' ) ) ) {
+			delete_post_meta( $post_id, '_ai1ec_push_reserved_time' );
+		}
 	}
 }
 
