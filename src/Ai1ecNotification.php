@@ -22,7 +22,7 @@ class Ai1ecNotification {
 	public function registerMetabox() {
 		add_meta_box(
 			'ai1ec-notification',
-			'이벤트 알림',
+			'일정 알림',
 			[ $this, 'metaboxHtml' ],
 			[ 'ai1ec_event' ]
 		);
