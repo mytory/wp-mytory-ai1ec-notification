@@ -55,7 +55,7 @@ class Ai1ecNotification {
 
 		if ( $event->is_allday() and $start_carbon->isSameDay( $now ) ) {
 			// 하루종일 일정이고 같은 날이면 바로 보낸다.
-			$notification_time = $now;
+			$notification_time = $now->addMinute();
 		}
 
 		if ( $event->is_allday() and $start_carbon->gt( $now ) ) {
@@ -65,7 +65,7 @@ class Ai1ecNotification {
 
 		if ( ! $event->is_allday() and $start_carbon->gt( $now ) and $notification_time->lt( $now ) ) {
 			// 하루종일 일정이 아니고 시작 시각이 현재 시각보다 뒤지만, 알림 시각은 지난 경우라면 바로 알림을 보낸다.
-			$notification_time = $now;
+			$notification_time = $now->addMinute();
 		}
 
 		$response = self::canPushNotification( $event->is_allday(), $start_carbon );
@@ -173,7 +173,7 @@ class Ai1ecNotification {
 
 		if ( $event->is_allday() and $start_carbon->isSameDay( $now ) and $start_carbon->format( 'H' ) < 20 ) {
 			// 하루종일 일정이고 같은 날이고 오후 8시 전이면 바로 보낸다.
-			$notification_time = $now;
+			$notification_time = $now->addMinute();
 		}
 
 		if ( $event->is_allday() and $start_carbon->gt( $now ) ) {
@@ -181,21 +181,21 @@ class Ai1ecNotification {
 			$notification_time = $start_carbon->clone()->setHour( 8 )->setMinute( 0 )->setSecond( 0 );
 		}
 
-		if ( ! $event->is_allday() and $start_carbon->format('Y-m-d') > $now->format('Y-m-d') ) {
+		if ( ! $event->is_allday() and $start_carbon->format( 'Y-m-d' ) > $now->format( 'Y-m-d' ) ) {
 			// 하루종일 일정이 아니고 시작 날짜가 내일 이후인 경우
-			if ($notification_time->format('H') >= 20) {
+			if ( $notification_time->format( 'H' ) >= 20 ) {
 				// 시작 시각 한 시간 전인 알림 시각이 오후 8시 이후가 된 경우에는 알림 시각을 강제로 오후 8시로 조정한다.
-				$notification_time->setHour(20)->setMinute(0)->setSecond(0);
-			} elseif ($notification_time->format('H') < 8) {
+				$notification_time->setHour( 20 )->setMinute( 0 )->setSecond( 0 );
+			} elseif ( $notification_time->format( 'H' ) < 8 ) {
 				// 시작 시각 한 시간 전인 알림 시각이 오전 8시 이전인 경우에는 알림 시각을 강제로 오전 8시로 조정한다.
-				$notification_time->setHour(8)->setMinute(0)->setSecond(0);
+				$notification_time->setHour( 8 )->setMinute( 0 )->setSecond( 0 );
 			}
 			// 그 밖의 경우에는 현재 알림 시각을 유지한다.
 		}
 
 		if ( ! $event->is_allday() and $start_carbon->gt( $now ) and $notification_time->lt( $now ) ) {
 			// 하루종일 일정이 아니고 시작 시각이 현재 시각보다 뒤지만, 알림 시각은 지난 경우라면 바로 알림을 보낸다.
-			$notification_time = $now;
+			$notification_time = $now->addMinute();
 		}
 
 		update_post_meta( $post_id, '_ai1ec_kakao_notified', '예약' );
@@ -264,7 +264,7 @@ class Ai1ecNotification {
 			];
 		}
 
-		if ($start_carbon->gt($now) and $start_carbon->format('H') < 8 and $start_carbon->clone()->subDay()->setHour(20)->setMinute(0)->setSecond(0)->lt($now)) {
+		if ( $start_carbon->gt( $now ) and $start_carbon->format( 'H' ) < 8 and $start_carbon->clone()->subDay()->setHour( 20 )->setMinute( 0 )->setSecond( 0 )->lt( $now ) ) {
 			// 시작 시각이 현재보다 뒤고, 시작 시각이 오전 8시 전이고, 시작 시각 하루 전날 오후 8시가 이미 지났다면 알림을 보내지 않는다.
 			return [
 				'result'  => false,
