@@ -16,7 +16,7 @@ class Ai1ecNotification {
 		add_action( 'save_post', [ $this, 'pushSaveHook' ], 10, 3 );
 		add_action( 'save_post', [ $this, 'kakaoSaveHook' ], 10, 3 );
 		add_action( 'mytory_ai1ec_send_push', [ $this, 'sendPush' ] );
-		add_action( 'mytory_ae1ec_send_kkao', [ $this, 'sendKakao' ] );
+		add_action( 'mytory_ae1ec_send_kakao', [ $this, 'sendKakao' ] );
 	}
 
 	public function registerMetabox() {
@@ -77,7 +77,7 @@ class Ai1ecNotification {
 		update_post_meta( $post_id, '_ai1ec_push_reserved_time', $notification_time->format( 'U' ) );
 
 		// 일정 시작 한 시간 전으로 예약을 건다. 이렇게 하면 알림 시작 시각이 지났으면 바로 알림이 가게 된다.
-		wp_schedule_single_event( $notification_time->format( 'U' ), 'sendPush', [ $post_id ] );
+		wp_schedule_single_event( $notification_time->format( 'U' ), 'mytory_ai1ec_send_push', [ $post_id ] );
 	}
 
 	/**
@@ -200,7 +200,7 @@ class Ai1ecNotification {
 
 		update_post_meta( $post_id, '_ai1ec_kakao_notified', '예약' );
 		update_post_meta( $post_id, '_ai1ec_kakao_reserved_time', $notification_time->format( 'U' ) );
-		wp_schedule_single_event( $notification_time->format( 'U' ), 'sendKakao', [ $post_id ] );
+		wp_schedule_single_event( $notification_time->format( 'U' ), 'mytory_ai1ec_send_kakao', [ $post_id ] );
 	}
 
 	/**
