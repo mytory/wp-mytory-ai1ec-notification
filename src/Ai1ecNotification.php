@@ -390,8 +390,8 @@ class Ai1ecNotification {
 		$title = '일정 알림';
 		$data  = array(
 			'title' => $title,
-			'body'  => html_entity_decode( get_the_title( $post ) ),
-			'url'   => get_permalink( $post ),
+			'body'  => $post->post_title,
+			'url'   => site_url('?p=' . $post->ID),
 		);
 
 		$fcm = new FCMSimple( FCM_TOKEN );
